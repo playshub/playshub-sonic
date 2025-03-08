@@ -1,0 +1,25 @@
+@font-face {
+  font-family: 'myriadpro-bold';
+  src: url('./fonts/myriadpro-bold.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'myriadpro-regular';
+  src: url('./fonts/myriadpro-regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.Earn::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}

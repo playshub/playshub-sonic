@@ -1,0 +1,30 @@
+export type QUEST_TYPE = "DAILY" | "TASK" | "X_TASK";
+
+export type QUEST_REQUEST_TYPE =
+  // TASk
+  | "FOLLOW_PLAYS_ON_X"
+  | "JOIN_TELEGRAM_CHANNEL"
+  | "JOIN_TELEGRAM_CHAT"
+  | "LIKE_TWEET_X_POST"
+  | "CREATE_SOL_WALLET"
+  // DAILY
+  | "CHECK_IN_SOL_WALLET"
+  | "BUY_ITEM"
+  | "INVITE"
+  | "PLAY_CAT_BATTLE"
+  | "PLAY_CAT_LUCKY"
+  | "COMPLETE_DAILY_TASK"
+  // X_TASK
+  | "X_TASK_1"
+  | "X_TASK_2"
+  | "X_TASK_3"
+  | "X_TASK_4"
+  | "X_TASK_5";
+
+export type PARTNER_QUEST_TYPE = "PARTNER_TASK";
+export type PARTNER_QUEST_REQUEST_TYPE =
+  | "PARTER_TASK_1"
+  | "PARTER_TASK_2"
+  | "PARTER_TASK_3"
+  | "PARTER_TASK_4"
+  | "PARTER_TASK_5";

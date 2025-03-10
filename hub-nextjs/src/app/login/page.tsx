@@ -4,10 +4,12 @@ import { TELEGRAM_BOT_USERNAME } from "@/utils/constants";
 import { useMutation } from "@tanstack/react-query";
 import { LoginButton } from "@telegram-auth/react";
 import { Flex, Result } from "antd";
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 function Login() {
-  const { isError, mutate, error } = useMutation({
+  const router = useRouter();
+
+  const { isError, mutateAsync } = useMutation({
     mutationFn: async (params: {
       telegramId: string;
       displayName: string;
@@ -37,12 +39,14 @@ function Login() {
       <div style={{ marginTop: "auto", padding: 20 }}>
         <LoginButton
           botUsername={TELEGRAM_BOT_USERNAME}
-          onAuthCallback={(data) => {
-            mutate({
+          onAuthCallback={async (data) => {
+            await mutateAsync({
               telegramId: data.id.toString(),
               displayName: data.first_name,
               languageCode: "en",
             });
+
+            router.push("/");
           }}
         />
       </div>

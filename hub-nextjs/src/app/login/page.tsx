@@ -4,7 +4,6 @@ import { LoginButton } from "@telegram-auth/react";
 import { Button, Flex } from "antd";
 
 function Login() {
-  console.log(TELEGRAM_BOT_USERNAME);
   return (
     <Flex align="center" vertical>
       <LoginButton

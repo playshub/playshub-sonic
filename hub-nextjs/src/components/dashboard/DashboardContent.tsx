@@ -30,44 +30,6 @@ export default function DashboardContent({ children }: PropsWithChildren) {
     stepIndex: letAirdropTutorialStepIndex,
   } = useLetAirdropTutorial();
 
-  const { isError, mutate, error } = useMutation({
-    mutationFn: async () => {},
-  });
-
-  useEffect(() => {
-    mutate();
-  }, []);
-
-  if (isError) {
-    if (error.name === "UnauthorizedError") {
-      return (
-        <Result
-          status="403"
-          title="403"
-          subTitle="Sorry, you are not authorized to access this page."
-          extra={
-            <Button
-              type="primary"
-              onClick={() => {
-                mutate();
-              }}
-            >
-              Retry
-            </Button>
-          }
-        />
-      );
-    } else {
-      return (
-        <Result
-          status="500"
-          title=""
-          subTitle="Server is under maintenance, please visit again few minutes!."
-        />
-      );
-    }
-  }
-
   return (
     <>
       <Joyride

@@ -30,6 +30,10 @@ api.interceptors.response.use(
     return response;
   },
   async (error) => {
+    if (error.response?.status === 401) {
+      setJwtToken("");
+      window.location.href = "/login";
+    }
     return Promise.reject(error);
   }
 );

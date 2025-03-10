@@ -5,10 +5,11 @@ import { getLocale } from "next-intl/server";
 import { Root } from "@/components/Root/Root";
 import { I18nProvider } from "@/core/i18n/provider";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { Providers } from "@/components/providers/Providers";
 import "../styles/globals.css";
 import "../styles/overrides.css";
 import { regularFont } from "@/styles/fonts/font";
+import { QueryClient } from "@tanstack/react-query";
+import { RootProviders } from "@/components/providers/RootProviders";
 
 export const metadata: Metadata = {
   title: "PLAYS Hub",
@@ -24,7 +25,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       <body className={regularFont.className}>
         <I18nProvider>
           <Root>
-            <Providers>{children}</Providers>
+            <RootProviders>{children}</RootProviders>
           </Root>
         </I18nProvider>
       </body>

@@ -16,3 +16,6 @@ export const SOLANA_RPC_URL =
   process.env.NEXT_PUBLIC_SOLANA_RPC_URL || "https://api.devnet.solana.com";
 
 export const SARA_URL = process.env.NEXT_PUBLIC_SARA_URL as string;
+
+export const TELEGRAM_BOT_USERNAME = process.env
+  .NEXT_PUBLIC_TELEGRAM_BOT_USERNAME as string;

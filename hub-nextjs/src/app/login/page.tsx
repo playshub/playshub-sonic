@@ -5,14 +5,16 @@ import { Button, Flex } from "antd";
 
 function Login() {
   return (
-    <Flex align="center" vertical>
-      <LoginButton
-        botUsername={TELEGRAM_BOT_USERNAME}
-        onAuthCallback={(data) => {
-          console.log(data);
-          // call your backend here to validate the data and sign in the user
-        }}
-      />
+    <Flex align="center" vertical style={{ height: "100vh" }}>
+      <div style={{ marginTop: "auto", padding: 20 }}>
+        <LoginButton
+          botUsername={TELEGRAM_BOT_USERNAME}
+          onAuthCallback={(data) => {
+            console.log(data);
+            // call your backend here to validate the data and sign in the user
+          }}
+        />
+      </div>
     </Flex>
   );
 }

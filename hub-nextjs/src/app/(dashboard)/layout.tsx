@@ -51,7 +51,7 @@ export default function Dashboard({ children }: PropsWithChildren) {
             }}
           >
             <DashboardContent>{children}</DashboardContent>
-            <div style={{ height: 68 }} />
+            <div style={{ height: 78 }} />
           </Content>
           <Footer
             style={{
@@ -59,6 +59,8 @@ export default function Dashboard({ children }: PropsWithChildren) {
               position: "fixed",
               width: "100%",
               bottom: 0,
+              maxWidth: 450,
+              margin: "0 auto",
             }}
           >
             <Menu

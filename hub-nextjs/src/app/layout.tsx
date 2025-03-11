@@ -25,7 +25,19 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       <body className={regularFont.className}>
         <I18nProvider>
           <Root>
-            <RootProviders>{children}</RootProviders>
+            <RootProviders>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "100%",
+                  maxWidth: 450,
+                  margin: "0 auto",
+                }}
+              >
+                {children}
+              </div>
+            </RootProviders>
           </Root>
         </I18nProvider>
       </body>

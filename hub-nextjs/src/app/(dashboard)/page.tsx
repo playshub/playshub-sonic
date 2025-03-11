@@ -25,6 +25,8 @@ import { useEffect, useState } from "react";
 import { useCreateWalletTutorial } from "@/components/providers/CreateWalletTutorialProvider";
 
 import StartAirdropTaskModal from "@/components/modals/StartAirdropTaskModal";
+import { useOpenCatLuckyLink } from "@/hooks/useOpenCatLuckyLink";
+import { useOpenCatBattleLink } from "@/hooks/useOpenCatBattleLink";
 
 function App() {
   const { playGameAreaRef, tourActive, setRun } = useCreateWalletTutorial();
@@ -33,18 +35,21 @@ function App() {
     queryFn: getProfile,
   });
 
+  const { link: catLuckyLink } = useOpenCatLuckyLink();
+  const { link: catBattleLink } = useOpenCatBattleLink();
+
   const games = [
     {
       name: "Cat Battle",
       image: "/icons/play/catbattle-icon.png",
       description: "Defense against alien invasion",
-      link: `${GAME_CAT_BATTLE_URL}?pv_key=${localStorage.getItem("pv_key")}`,
+      link: catBattleLink,
     },
     {
       name: "Cat Lucky",
       image: "/icons/play/lucky-icon.png",
       description: "Get Big Rewards in Tower",
-      link: `${GAME_CAT_LUCKY_URL}`,
+      link: catLuckyLink,
     },
     // {
     //   name: "SARA",

@@ -1,6 +1,7 @@
 "use client";
 import { login } from "@/apis/account/login";
 import { TELEGRAM_BOT_USERNAME } from "@/utils/constants";
+import { setUser } from "@/utils/storage";
 import { useMutation } from "@tanstack/react-query";
 import { LoginButton } from "@telegram-auth/react";
 import { Flex, Result } from "antd";
@@ -52,10 +53,11 @@ function Login() {
           onAuthCallback={async (data) => {
             await mutateAsync({
               telegramId: data.id.toString(),
-              displayName: data.first_name,
+              displayName: `${data.first_name} ${data.last_name}`,
               languageCode: "en",
             });
 
+            setUser(data);
             router.push("/");
           }}
         />

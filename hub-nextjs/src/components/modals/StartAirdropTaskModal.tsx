@@ -33,6 +33,7 @@ export default function StartAirdropTaskModal() {
             borderRadius: 10,
             width: "90%",
             margin: "auto",
+            maxWidth: 350,
           },
         }}
       >

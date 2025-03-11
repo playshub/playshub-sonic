@@ -23,3 +23,11 @@
   border-radius: 50%;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
+
+.scroll-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-hidden {
+  scrollbar-width: none;
+}

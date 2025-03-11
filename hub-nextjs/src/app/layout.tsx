@@ -20,17 +20,17 @@ export default async function RootLayout({ children }: PropsWithChildren) {
   const locale = await getLocale();
 
   return (
-    <html
-      lang={locale}
-      style={{
-        backgroundImage: "url(/images/bg.png)",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        height: "100vh",
-      }}
-    >
-      <body className={regularFont.className}>
+    <html lang={locale}>
+      <body
+        className={regularFont.className}
+        style={{
+          backgroundImage: "url(/images/bg.png)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          height: "100vh",
+        }}
+      >
         <I18nProvider>
           <Root>
             <RootProviders>

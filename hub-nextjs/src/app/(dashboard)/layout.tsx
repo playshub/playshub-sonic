@@ -44,10 +44,13 @@ export default function Dashboard({ children }: PropsWithChildren) {
       <Providers>
         <Layout>
           <Content
+            className="scroll-hidden"
             style={{
               padding: "10px 10px",
               minHeight: "100vh",
               paddingBottom: 0,
+              maxHeight: "100vh",
+              overflow: "scroll",
             }}
           >
             <DashboardContent>{children}</DashboardContent>

@@ -72,7 +72,7 @@ function App() {
   ];
 
   const play = async ({ link, name }: { link: string; name: string }) => {
-    window.open(link, "_self");
+    window.open(link, "_blank");
   };
 
   useEffect(() => {

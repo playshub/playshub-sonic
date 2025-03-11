@@ -8,7 +8,6 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import "../styles/globals.css";
 import "../styles/overrides.css";
 import { regularFont } from "@/styles/fonts/font";
-import { QueryClient } from "@tanstack/react-query";
 import { RootProviders } from "@/components/providers/RootProviders";
 
 export const metadata: Metadata = {
@@ -21,7 +20,16 @@ export default async function RootLayout({ children }: PropsWithChildren) {
   const locale = await getLocale();
 
   return (
-    <html lang={locale}>
+    <html
+      lang={locale}
+      style={{
+        backgroundImage: "url(/images/bg.png)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        height: "100vh",
+      }}
+    >
       <body className={regularFont.className}>
         <I18nProvider>
           <Root>

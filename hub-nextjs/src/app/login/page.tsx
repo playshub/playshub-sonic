@@ -35,8 +35,18 @@ function Login() {
   }
 
   return (
-    <Flex align="center" vertical style={{ height: "100vh" }}>
-      <div style={{ marginTop: "auto", padding: 20 }}>
+    <Flex
+      align="center"
+      vertical
+      style={{
+        height: "100vh",
+        backgroundImage: "url(/images/login_bg.png)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <div style={{ marginTop: "auto", padding: 20, marginBottom: 80 }}>
         <LoginButton
           botUsername={TELEGRAM_BOT_USERNAME}
           onAuthCallback={async (data) => {

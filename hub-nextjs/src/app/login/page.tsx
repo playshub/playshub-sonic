@@ -42,7 +42,7 @@ function Login() {
       style={{
         height: "100vh",
         backgroundImage: "url(/images/login_bg.png)",
-        backgroundSize: "cover",
+        backgroundSize: "contain",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}

@@ -9,7 +9,7 @@ export default function Loading() {
         justifyContent: "center",
         alignItems: "center",
         background: "url('/images/login_bg.png')",
-        backgroundSize: "cover",
+        backgroundSize: "contain",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}

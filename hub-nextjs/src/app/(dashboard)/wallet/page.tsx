@@ -1,145 +1,50 @@
 "use client";
 import { useSolWallet } from "@/components/providers/SolanaWalletProvider";
 import { useCreateWalletTutorial } from "@/components/providers/CreateWalletTutorialProvider";
+import WalletInitialize from "@/components/wallet/WalletInitialize";
 import { formatAddress } from "@/utils/web3";
 import {
   CopyOutlined,
   DeleteOutlined,
-  DisconnectOutlined,
   ExportOutlined,
-  ImportOutlined,
 } from "@ant-design/icons";
 import {
   Avatar,
   Button,
-  Card,
   Col,
   Divider,
   Flex,
   Image,
-  Input,
-  List,
   Modal,
   Popconfirm,
   Row,
-  Space,
   Typography,
 } from "antd";
 import { useEffect, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useImportWalletTutorial } from "@/components/providers/ImportWalletTutorialProvider";
-import {
-  useTonAddress,
-  useTonConnectModal,
-  useTonConnectUI,
-} from "@tonconnect/ui-react";
-import { useNotification } from "@/components/providers/NotificationProvider";
-import useTonBalance from "@/hooks/useTonBalance";
+import { useQuery } from "@tanstack/react-query";
+import { getProfile } from "@/apis/account/profile";
 
 export default function Wallet() {
-  const notification = useNotification()!;
-  const {
-    isInitialized,
-    wallet,
-    deleteWallet,
-    balance,
-    refetchBalance,
-    generateWallet,
-    importWallet,
-  } = useSolWallet();
-  const [openExport, setOpenExport] = useState(false);
-  const [openImport, setOpenImport] = useState(false);
-
-  const [privateKey, setPrivateKey] = useState("");
-
+  const { isInitialized, wallet, deleteWallet, balance, refetchBalance } =
+    useSolWallet();
+  const [open, setOpen] = useState(false);
   const {
     walletAddressRef,
     tourActive: createWalletTutorialTourActive,
     setRun: setCreateWalletTutorialRun,
   } = useCreateWalletTutorial();
-  const tonAddress = useTonAddress();
+
   const {
     tourActive: importWalletTutorialTourActive,
     setRun: setImportWalletTutorialRun,
   } = useImportWalletTutorial();
 
-  const [tonConnectUI] = useTonConnectUI();
-  const tonBalance = useTonBalance();
-
-  const [chain, setChain] = useState("SOL");
-  const { open: openTonConnectModal } = useTonConnectModal();
-
-  const wallets = [
-    {
-      name: "SOL",
-      image: "/icons/play/solana-icon.png",
-      amount: balance,
-      actions: [
-        isInitialized ? (
-          <Space>
-            <Typography.Text>
-              {formatAddress(wallet?.publicKey!)}
-            </Typography.Text>
-            <Popconfirm
-              title="Delete Wallet"
-              description="Are you sure to delete this wallet?"
-              onConfirm={() => deleteWallet()}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button icon={<DisconnectOutlined />}></Button>
-            </Popconfirm>
-          </Space>
-        ) : (
-          <Space>
-            <Button
-              type="primary"
-              onClick={() => {
-                generateWallet();
-              }}
-            >
-              Create
-            </Button>
-            <Button
-              type="primary"
-              onClick={() => {
-                setOpenImport(true);
-              }}
-            >
-              Import
-            </Button>
-          </Space>
-        ),
-      ],
-    },
-    {
-      name: "TON",
-      image: "/icons/play/ton-icon.png",
-      amount: tonBalance,
-      actions: [
-        tonConnectUI.connected ? (
-          <Space>
-            <Typography.Text>{formatAddress(tonAddress)}</Typography.Text>
-            <Button
-              onClick={async () => {
-                await tonConnectUI.disconnect();
-              }}
-              icon={<DisconnectOutlined />}
-            ></Button>
-          </Space>
-        ) : (
-          <Button
-            type="primary"
-            onClick={() => {
-              openTonConnectModal();
-            }}
-          >
-            Connect
-          </Button>
-        ),
-      ],
-    },
-  ];
+  const { data: profileData } = useQuery({
+    queryKey: ["profile"],
+    queryFn: getProfile,
+  });
 
   useEffect(() => {
     if (createWalletTutorialTourActive) {
@@ -157,201 +62,141 @@ export default function Wallet() {
     }
   }, [importWalletTutorialTourActive]);
 
+  if (!isInitialized) {
+    return <WalletInitialize />;
+  }
+
   return (
     <div>
-      <div style={{ height: "calc(100vh - 68px - 10px)", padding: "10px 0px" }}>
-        <Row gutter={[0, 10]} style={{ height: "100%" }}>
-          {chain === "SOL" && (
-            <>
-              <Col span={24}>
-                <Flex vertical style={{ alignItems: "center" }} gap={10}>
-                  <div>
-                    <Image
-                      src={"/icons/play/solana-icon.png"}
-                      preview={false}
-                      width={80}
-                      alt=""
-                    />
-                  </div>
-                  <div
-                    style={{
-                      background: "white",
-                      padding: "10px",
-                      borderRadius: 10,
-                      marginBottom: 10,
-                      width: "90%",
-                    }}
-                  >
-                    <Flex
-                      vertical
-                      align="center"
-                      gap={10}
-                      style={{ marginBottom: 5 }}
-                    >
-                      <div
-                        style={{
-                          background: "white",
-                          borderRadius: 10,
-                          textAlign: "center",
-                          width: "60%",
-                        }}
-                      >
-                        <Typography.Text
-                          style={{
-                            fontWeight: "bold",
-                            fontSize: 16,
-                          }}
-                        >
-                          {balance}{" "}
-                          <Typography.Text
-                            style={{ color: "#8B4FF5", fontSize: 16 }}
-                          >
-                            SOL
-                          </Typography.Text>
-                        </Typography.Text>
-                      </div>
-
-                      <Button disabled>Transfer</Button>
-                    </Flex>
-                  </div>
-                </Flex>
-              </Col>
-              <Col span={24} flex={1}>
-                <div style={{ width: "90%", margin: "auto" }}>
-                  <Flex gap={10} align="center" justify="center">
-                    <Button
-                      icon={<ExportOutlined />}
-                      size="large"
-                      type="primary"
-                      onClick={() => setOpenExport(true)}
-                    >
-                      Export Private Key
-                    </Button>
-                    <Popconfirm
-                      title="Delete Wallet"
-                      description="Are you sure to delete this wallet?"
-                      onConfirm={() => deleteWallet()}
-                      okText="Yes"
-                      cancelText="No"
-                    >
-                      <Button
-                        icon={<DeleteOutlined />}
-                        size="large"
-                        style={{ background: "#F3816F", color: "white" }}
-                      >
-                        Delete Wallet
-                      </Button>
-                    </Popconfirm>
-                  </Flex>
-                </div>
-              </Col>
-            </>
-          )}
-          {chain === "TON" && (
-            <Col span={24}>
-              <Flex vertical style={{ alignItems: "center" }} gap={10}>
-                <div>
-                  <Image
-                    src={"/icons/play/ton-icon.png"}
-                    preview={false}
-                    width={80}
-                    alt=""
-                  />
-                </div>
-                <div
-                  style={{
-                    background: "white",
-                    padding: "10px",
-                    borderRadius: 10,
-                    marginBottom: 10,
-                    width: "90%",
-                  }}
-                >
-                  <Flex
-                    vertical
-                    align="center"
-                    gap={10}
-                    style={{ marginBottom: 5 }}
-                  >
-                    <div
-                      style={{
-                        background: "white",
-                        borderRadius: 10,
-                        textAlign: "center",
-                        width: "60%",
-                      }}
-                    >
-                      <Typography.Text
-                        style={{
-                          fontWeight: "bold",
-                          fontSize: 16,
-                        }}
-                      >
-                        {tonBalance}{" "}
-                        <Typography.Text
-                          style={{ color: "#8B4FF5", fontSize: 16 }}
-                        >
-                          TON
-                        </Typography.Text>
-                      </Typography.Text>
-                    </div>
-
-                    <Button type="default" disabled>
-                      Transfer
-                    </Button>
-                  </Flex>
-                </div>
-              </Flex>
-            </Col>
-          )}
-
-          <Col span={24} style={{ marginTop: "auto" }}>
-            <div>
-              <div
-                style={{
-                  background: "white",
-                  padding: "10px",
-                  borderRadius: 10,
-                  marginTop: 40,
-                }}
-              >
-                <List
-                  header={
-                    <Typography.Text style={{ fontWeight: "bold" }}>
-                      Select tokens:
-                    </Typography.Text>
-                  }
-                  itemLayout="horizontal"
-                  dataSource={wallets}
-                  renderItem={(item) => (
-                    <List.Item
-                      actions={item.actions}
-                      onClick={() => {
-                        setChain(item.name);
-                      }}
-                      style={{
-                        background: item.name === chain ? "#F5F5F5" : "white",
-                      }}
-                    >
-                      <List.Item.Meta
-                        avatar={<Avatar src={item.image} size={50} />}
-                        title={item.name}
-                        description={item.amount}
-                      />
-                    </List.Item>
-                  )}
+      <div style={{ padding: "10px 0px" }}>
+        <Row gutter={[0, 10]}>
+          <Col span={24}>
+            <Flex vertical style={{ alignItems: "center" }}>
+              <div style={{ padding: 10 }}>
+                <Image
+                  src={"/icons/play/solana-icon.png"}
+                  preview={false}
+                  width={80}
+                  alt=""
                 />
               </div>
-            </div>
+              <div
+                style={{
+                  background: "#DBDBDB",
+                  padding: "10px",
+                  borderRadius: 10,
+                  marginBottom: 10,
+                  width: "80%",
+                }}
+              >
+                <Flex align="center" gap={10} style={{ marginBottom: 5 }}>
+                  <Typography.Text style={{ width: 60 }}>
+                    Available:
+                  </Typography.Text>
+                  <Typography.Text
+                    style={{
+                      fontWeight: "bold",
+                      flex: 1,
+                      textAlign: "center",
+                      background: "white",
+                      borderRadius: 10,
+                    }}
+                  >
+                    {balance}{" "}
+                    <Typography.Text style={{ color: "#8B4FF5" }}>
+                      SOL
+                    </Typography.Text>
+                  </Typography.Text>
+                  <Button
+                    style={{ width: 60 }}
+                    type="primary"
+                    onClick={refetchBalance}
+                  >
+                    Refresh
+                  </Button>
+                </Flex>
+                <Flex align="center" gap={10}>
+                  <Typography.Text style={{ width: 60 }}>
+                    Pending:
+                  </Typography.Text>
+                  <Typography.Text
+                    style={{
+                      fontWeight: "bold",
+                      flex: 1,
+                      textAlign: "center",
+                      background: "white",
+                      borderRadius: 10,
+                    }}
+                  >
+                    {profileData?.currency.sol || 0}{" "}
+                    <Typography.Text style={{ color: "#8B4FF5" }}>
+                      SOL
+                    </Typography.Text>
+                  </Typography.Text>
+                  <Button style={{ width: 60 }} disabled>
+                    Claim
+                  </Button>
+                </Flex>
+              </div>
+              <Flex
+                align="center"
+                style={{
+                  background: "#DBDBDB",
+                  padding: "5px 40px",
+                  borderRadius: 10,
+                }}
+                ref={walletAddressRef}
+              >
+                <Typography.Text style={{ flex: 1 }}>
+                  {formatAddress(wallet?.publicKey!)}
+                </Typography.Text>
+                <CopyToClipboard text={wallet?.publicKey!}>
+                  <Button icon={<CopyOutlined />} type="text"></Button>
+                </CopyToClipboard>
+              </Flex>
+            </Flex>
+          </Col>
+          <Col span={24} style={{ paddingLeft: 20, paddingRight: 20 }}>
+            <Divider />
+            <Typography.Text style={{ fontSize: 16, fontWeight: "bold" }}>
+              Privacy
+            </Typography.Text>
+          </Col>
+          <Col span={24} style={{ paddingLeft: 20, paddingRight: 20 }}>
+            <Flex vertical gap={10}>
+              <Button
+                icon={<ExportOutlined />}
+                size="large"
+                type="primary"
+                onClick={() => setOpen(true)}
+              >
+                Export Private Key
+              </Button>
+              <Popconfirm
+                title="Delete Wallet"
+                description="Are you sure to delete this wallet?"
+                onConfirm={() => deleteWallet()}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button
+                  icon={<DeleteOutlined />}
+                  size="large"
+                  style={{ background: "#F3816F", color: "white" }}
+                >
+                  Delete Wallet
+                </Button>
+              </Popconfirm>
+            </Flex>
           </Col>
         </Row>
       </div>
 
       <Modal
-        open={openExport}
+        open={open}
         footer={null}
         closeIcon={null}
-        onCancel={() => setOpenExport(false)}
+        onCancel={() => setOpen(false)}
       >
         <Flex vertical gap={10}>
           <div>{wallet?.privateKey}</div>
@@ -359,44 +204,11 @@ export default function Wallet() {
             <Button
               icon={<CopyOutlined />}
               type="primary"
-              onClick={() => setOpenExport(false)}
+              onClick={() => setOpen(false)}
             >
               Copy
             </Button>
           </CopyToClipboard>
-        </Flex>
-      </Modal>
-
-      <Modal
-        open={openImport}
-        footer={null}
-        closeIcon={null}
-        onCancel={() => setOpenImport(false)}
-      >
-        <Flex vertical gap={10}>
-          <div>
-            <Input.TextArea
-              style={{ height: 100 }}
-              placeholder="Please input your private key"
-              value={privateKey}
-              onChange={(e) => setPrivateKey(e.target.value)}
-            ></Input.TextArea>
-          </div>
-          <Button
-            icon={<ImportOutlined />}
-            type="primary"
-            onClick={() => {
-              try {
-                importWallet(privateKey);
-              } catch (error) {
-                notification.error("Invalid private key");
-                console.error(error);
-              }
-            }}
-            disabled={!privateKey}
-          >
-            Import
-          </Button>
         </Flex>
       </Modal>
     </div>

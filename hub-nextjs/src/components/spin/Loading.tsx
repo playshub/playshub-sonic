@@ -5,7 +5,10 @@ export default function Loading() {
     <Spin tip="Loading" size="large">
       <div
         style={{
-          height: "calc(100vh - 88px)",
+          height: "calc(100vh)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       ></div>
     </Spin>

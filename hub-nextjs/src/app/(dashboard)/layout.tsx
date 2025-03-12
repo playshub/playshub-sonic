@@ -1,5 +1,5 @@
 "use client";
-import { Button, Layout, Menu, Result } from "antd";
+import { Layout, Menu } from "antd";
 import MenuItem from "../../components/MenuItem/MenuItem";
 import PlayIcon from "../../components/MenuItem/PlayIcon";
 import EarnIcon from "../../components/MenuItem/EarnIcon";
@@ -10,10 +10,18 @@ import { PropsWithChildren, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import DashboardContent from "@/components/dashboard/DashboardContent";
 import { Providers } from "@/components/providers/Providers";
+import { useQuery } from "@tanstack/react-query";
+import { getProfile } from "@/apis/account/profile";
+import Loading from "@/components/spin/Loading";
 
 const { Content, Footer } = Layout;
 
 export default function Dashboard({ children }: PropsWithChildren) {
+  const { isLoading } = useQuery({
+    queryKey: ["profile"],
+    queryFn: getProfile,
+  });
+
   const router = useRouter();
   const pathname = usePathname();
 
@@ -38,6 +46,10 @@ export default function Dashboard({ children }: PropsWithChildren) {
         break;
     }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div>

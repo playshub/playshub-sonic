@@ -6,17 +6,23 @@ import EarnIcon from "../../components/MenuItem/EarnIcon";
 import RankIcon from "../../components/MenuItem/RankIcon";
 import WalletIcon from "../../components/MenuItem/WalletIcon";
 import InviteIcon from "../../components/MenuItem/InviteIcon";
-import { PropsWithChildren, useEffect } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import DashboardContent from "@/components/dashboard/DashboardContent";
 import { Providers } from "@/components/providers/Providers";
 import { useQuery } from "@tanstack/react-query";
 import { getProfile } from "@/apis/account/profile";
 import Loading from "@/components/spin/Loading";
+import { useOpenCatLuckyLink } from "@/hooks/useOpenCatLuckyLink";
+import { useOpenCatBattleLink } from "@/hooks/useOpenCatBattleLink";
+import { getApp } from "@/utils/storage";
 
 const { Content, Footer } = Layout;
 
 export default function Dashboard({ children }: PropsWithChildren) {
+  const { link: catLuckyLink } = useOpenCatLuckyLink();
+  const { link: catBattleLink } = useOpenCatBattleLink();
+
   const { isLoading } = useQuery({
     queryKey: ["profile"],
     queryFn: getProfile,
@@ -49,6 +55,24 @@ export default function Dashboard({ children }: PropsWithChildren) {
 
   if (isLoading) {
     return <Loading />;
+  }
+
+  if (getApp() === "cat-battle") {
+    return (
+      <iframe
+        src={catBattleLink}
+        style={{ width: "100%", height: "100vh" }}
+      ></iframe>
+    );
+  }
+
+  if (getApp() === "cat-lucky") {
+    return (
+      <iframe
+        src={catLuckyLink}
+        style={{ width: "100%", height: "100vh" }}
+      ></iframe>
+    );
   }
 
   return (

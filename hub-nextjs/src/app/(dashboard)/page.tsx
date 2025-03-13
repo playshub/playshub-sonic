@@ -27,6 +27,7 @@ import { useCreateWalletTutorial } from "@/components/providers/CreateWalletTuto
 import StartAirdropTaskModal from "@/components/modals/StartAirdropTaskModal";
 import { useOpenCatLuckyLink } from "@/hooks/useOpenCatLuckyLink";
 import { useOpenCatBattleLink } from "@/hooks/useOpenCatBattleLink";
+import { setApp } from "@/utils/storage";
 
 function App() {
   const { playGameAreaRef, tourActive, setRun } = useCreateWalletTutorial();
@@ -72,7 +73,8 @@ function App() {
   ];
 
   const play = async ({ link, name }: { link: string; name: string }) => {
-    window.open(link, "_blank");
+    setApp(name === "Cat Battle" ? "cat-battle" : "cat-lucky");
+    window.location.reload();
   };
 
   useEffect(() => {

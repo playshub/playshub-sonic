@@ -142,7 +142,6 @@ export const SolWalletProvider = ({
   };
 
   const onboardNewUser = async (privateKey: string, publicKey: string) => {
-    return; // Disable transaction create user on-chain for now
     const keyPair = Keypair.fromSecretKey(bs58.decode(privateKey));
 
     const { blockhash, lastValidBlockHeight } =

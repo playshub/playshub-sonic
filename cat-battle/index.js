@@ -1,4 +1,6 @@
-const cacheName = "CatB-Cat Battle-1.4.0.1.0";
+var fullSize = true;
+
+const cacheName = "CatB-Cat Battle-1.4.0.1.2";
   var unityInstanceRef;
   var unsubscribe;
   var container = document.querySelector("#unity-container");
@@ -81,15 +83,15 @@ const cacheName = "CatB-Cat Battle-1.4.0.1.0";
   // }, 5000); 
 
   var buildUrl = "Build";
-  var loaderUrl = buildUrl + "/a50e79a018bf0c679cc9a6575f7fd662.loader.js?v=1.4.0.1.0";
+  var loaderUrl = buildUrl + "/a50e79a018bf0c679cc9a6575f7fd662.loader.js?v=1.4.0.1.2";
   var config = {
-    dataUrl: buildUrl + "/a6401b955a552344b41ab133dee97fcf.data.unityweb?v=1.4.0.1.0",
-    frameworkUrl: buildUrl + "/f9c62a831f4d7726cb908a2529860e64.framework.js.unityweb?v=1.4.0.1.0",
-    codeUrl: buildUrl + "/e556a58e543e192bc7df067e39cf0eb6.wasm.unityweb?v=1.4.0.1.0",
+    dataUrl: buildUrl + "/fd0fe0787fd5bf1877c70ca772f41d1c.data.unityweb?v=1.4.0.1.2",
+    frameworkUrl: buildUrl + "/1d1b2ab1f6c98895eae4ff5013e13dcb.framework.js.unityweb?v=1.4.0.1.2",
+    codeUrl: buildUrl + "/2a4d0d969f8378598845b80021e6eca2.wasm.unityweb?v=1.4.0.1.2",
     streamingAssetsUrl: "StreamingAssets",
     companyName: "CatB",
     productName: "Cat Battle",
-    productVersion: "1.4.0.1.0",
+    productVersion: "1.4.0.1.2",
     showBanner: unityShowBanner,
 	  cacheControl: function (url) {
   //return "immutable";
@@ -192,6 +194,11 @@ document.body.appendChild(script);
   
 // Resize
 function render() {
+	if(fullSize)
+	{
+		 renderFullSize();
+		 return;
+	}
   const userAgent = navigator.userAgent.toLowerCase();
   if (userAgent.includes("mac os")) {
 	 var width = canvas.clientWidth;
@@ -241,7 +248,8 @@ function render() {
 	  else {
 		  var ratio = 1080/2160;
 
-		  canvas.style.width  = window.innerHeight * ratio + "px";
+		  //canvas.style.width  = window.innerHeight * ratio + "px";
+		  canvas.style.width  = "100%";
 		  canvas.style.height = "100%";
 
 		  canvas.width = window.innerHeight * ratio;
@@ -249,6 +257,72 @@ function render() {
 		  
 		  canvas.style.position = "fixed";
 		  canvas.style.left = ((window.innerWidth - canvas.width) / 2) + "px";
+	  }
+  }
+};
+
+function renderFullSize() {
+  const userAgent = navigator.userAgent.toLowerCase();
+  if (userAgent.includes("mac os")) {
+	 var width = canvas.clientWidth;
+	 var height = canvas.clientHeight;
+	 if (canvas.width != width || canvas.height != height) {
+		canvas.width = width;
+		canvas.height = height;
+			  
+		// in this case just render when the window is resized.
+	    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+			// Mobile device style: fill the whole browser client area with the game canvas:
+			var meta = document.createElement('meta');
+			meta.name = 'viewport';
+			meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+			document.getElementsByTagName('head')[0].appendChild(meta);
+		}
+		else {
+			var ratio = 1080/2160;
+
+			//canvas.style.width  = window.innerHeight * ratio + "px";
+			canvas.style.width  = "100%";
+			canvas.style.height = "100%";
+
+			//canvas.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+			//canvas.width = canvas.height * ratio;
+			canvas.style.position = "fixed";
+			//canvas.style.left = ((window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth) / 2 - canvas.width / 2) + "px";
+			canvas.style.left = "0px";
+		}
+	}  
+  }
+  else 
+  {
+	  if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+		  // Mobile device style: fill the whole browser client area with the game canvas:
+		  var meta = document.createElement('meta');
+		  meta.name = 'viewport';
+		  meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no';
+		  document.getElementsByTagName('head')[0].appendChild(meta);
+		  
+		  // Lock rotation handling for portrait-only mode
+		  //lockOrientation();
+	  
+		  canvas.style.width = "100%";
+		  canvas.style.height = "100%";
+		  canvas.style.position = "fixed";
+		  canvas.style.left = "0px";
+	  }
+	  else {
+		  var ratio = 1080/2160;
+
+		  //canvas.style.width  = window.innerHeight * ratio + "px";
+		  canvas.style.width  = "100%";
+		  canvas.style.height = "100%";
+
+		  //canvas.width = window.innerHeight * ratio;
+		  //canvas.height = window.innerHeight;
+		  
+		  canvas.style.position = "fixed";
+		  //canvas.style.left = ((window.innerWidth - canvas.width) / 2) + "px";
+		  canvas.style.left = "0px";
 	  }
   }
 };

@@ -19,3 +19,6 @@ export const SARA_URL = process.env.NEXT_PUBLIC_SARA_URL as string;
 
 export const TELEGRAM_BOT_USERNAME = process.env
   .NEXT_PUBLIC_TELEGRAM_BOT_USERNAME as string;
+
+export const HUB_BLOCKCHAIN_SERVICE_URL = process.env
+  .NEXT_PUBLIC_HUB_BLOCKCHAIN_SERVICE_URL as string;

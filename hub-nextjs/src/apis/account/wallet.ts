@@ -1,4 +1,6 @@
+import axios from "axios";
 import api from "../axios";
+import { HUB_BLOCKCHAIN_SERVICE_URL } from "@/utils/constants";
 
 export const connectWallet = (walletAddress: string) =>
   api.post("/account/connect_wallet", {
@@ -19,6 +21,6 @@ export const deleteWallet = () =>
   });
 
 export const onboardNewUser = (signedTransactionRaw: string) =>
-  api.post("/plays-hub/new_user", {
+  axios.post(`${HUB_BLOCKCHAIN_SERVICE_URL}/new-user`, {
     signedTransactionRaw,
   });

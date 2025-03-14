@@ -21,6 +21,6 @@ export const deleteWallet = () =>
   });
 
 export const onboardNewUser = (signedTransactionRaw: string) =>
-  axios.post(`${HUB_BLOCKCHAIN_SERVICE_URL}/new-user`, {
+  api.post("/plays-hub/new_user", {
     signedTransactionRaw,
   });

@@ -27,10 +27,11 @@ import { useCreateWalletTutorial } from "@/components/providers/CreateWalletTuto
 import StartAirdropTaskModal from "@/components/modals/StartAirdropTaskModal";
 import { useOpenCatLuckyLink } from "@/hooks/useOpenCatLuckyLink";
 import { useOpenCatBattleLink } from "@/hooks/useOpenCatBattleLink";
-import { setApp } from "@/utils/storage";
+import { useApp } from "@/components/providers/AppProvider";
 
 function App() {
   const { playGameAreaRef, tourActive, setRun } = useCreateWalletTutorial();
+  const { setApp } = useApp();
   const { data, isLoading } = useQuery({
     queryKey: ["profile"],
     queryFn: getProfile,
@@ -74,7 +75,6 @@ function App() {
 
   const play = async ({ link, name }: { link: string; name: string }) => {
     setApp(name === "Cat Battle" ? "cat-battle" : "cat-lucky");
-    window.location.reload();
   };
 
   useEffect(() => {

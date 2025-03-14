@@ -20,14 +20,3 @@ export const getUser = (): TelegramAuthData | null => {
 export const getPvKey = (): string | null => {
   return localStorage?.getItem("pv_key");
 };
-
-export const setApp = (app: "hub" | "cat-battle" | "cat-lucky") => {
-  localStorage?.setItem("app", app);
-};
-
-export const getApp = (): "hub" | "cat-battle" | "cat-lucky" => {
-  return (
-    (localStorage?.getItem("app") as "hub" | "cat-battle" | "cat-lucky") ||
-    "hub"
-  );
-};

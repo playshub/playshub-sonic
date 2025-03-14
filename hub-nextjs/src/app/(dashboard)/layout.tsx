@@ -15,14 +15,14 @@ import { getProfile } from "@/apis/account/profile";
 import Loading from "@/components/spin/Loading";
 import { useOpenCatLuckyLink } from "@/hooks/useOpenCatLuckyLink";
 import { useOpenCatBattleLink } from "@/hooks/useOpenCatBattleLink";
-import { getApp } from "@/utils/storage";
+import { useApp } from "@/components/providers/AppProvider";
 
 const { Content, Footer } = Layout;
 
 export default function Dashboard({ children }: PropsWithChildren) {
   const { link: catLuckyLink } = useOpenCatLuckyLink();
   const { link: catBattleLink } = useOpenCatBattleLink();
-
+  const { app } = useApp();
   const { isLoading } = useQuery({
     queryKey: ["profile"],
     queryFn: getProfile,
@@ -57,7 +57,7 @@ export default function Dashboard({ children }: PropsWithChildren) {
     return <Loading />;
   }
 
-  if (getApp() === "cat-battle") {
+  if (app === "cat-battle") {
     return (
       <iframe
         src={catBattleLink}
@@ -66,7 +66,7 @@ export default function Dashboard({ children }: PropsWithChildren) {
     );
   }
 
-  if (getApp() === "cat-lucky") {
+  if (app === "cat-lucky") {
     return (
       <iframe
         src={catLuckyLink}

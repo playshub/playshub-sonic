@@ -269,6 +269,10 @@ export default function Rank({
                   width: "calc(100% - 40px)",
                   bottom: 66,
                   background: "white",
+                  maxWidth: 450 - 20,
+                  marginLeft: "-10px",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
                 }}
               >
                 <List.Item.Meta

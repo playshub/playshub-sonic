@@ -40,10 +40,18 @@
 // });
 
 // SONIC - TESTNET
+ // const sonicPlugin = new SolUnitySDK.default({
+   // privateKey:
+     // window.location.href.match(/[?&]pv_key=([^&]+)/)?.[1],
+   // purchaseItemAddress: "GD37r8DmKERcDDC9wXbKJeCGhR24ZWD3KgdyBwHev1rq",
+   // rpcUrl:
+     // "https://api.testnet.sonic.game",
+  // });
+  // SONIC - MAINET
  const sonicPlugin = new SolUnitySDK.default({
    privateKey:
      window.location.href.match(/[?&]pv_key=([^&]+)/)?.[1],
-   purchaseItemAddress: "GD37r8DmKERcDDC9wXbKJeCGhR24ZWD3KgdyBwHev1rq",
+   purchaseItemAddress: "GUDyW6zsEisjWUwxRJm2aiW2eAnVJS5LqUDb1qVSM1mr",
    rpcUrl:
-     "https://api.testnet.sonic.game",
+     "https://rpc.mainnet-alpha.sonic.game/",
   });

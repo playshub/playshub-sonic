@@ -1,9 +1,9 @@
-const cacheName = "CatB-Cat Battle-1.4.0.1.2";
+const cacheName = "CatB-Cat Battle-1.4.0.1.4";
 const contentToCache = [
-    "Build/a50e79a018bf0c679cc9a6575f7fd662.loader.js?v=1.4.0.1.2",
-    "Build/1d1b2ab1f6c98895eae4ff5013e13dcb.framework.js.unityweb?v=1.4.0.1.2",
-    "Build/fd0fe0787fd5bf1877c70ca772f41d1c.data.unityweb?v=1.4.0.1.2",
-    "Build/2a4d0d969f8378598845b80021e6eca2.wasm.unityweb?v=1.4.0.1.2",
+    "Build/a50e79a018bf0c679cc9a6575f7fd662.loader.js?v=1.4.0.1.4",
+    "Build/566d4019654d18752e1e8736ad4a3a67.framework.js.unityweb?v=1.4.0.1.4",
+    "Build/4fda5e77e2ca40a6f4478f59d5bad15a.data.unityweb?v=1.4.0.1.4",
+    "Build/2a4d0d969f8378598845b80021e6eca2.wasm.unityweb?v=1.4.0.1.4",
     "TemplateData/style.css",
     "load-sdk.js",
     "ads.js",

@@ -1,6 +1,6 @@
 var fullSize = true;
 
-const cacheName = "CatB-Cat Battle-1.4.0.1.4";
+const cacheName = "CatB-Cat Battle-1.4.0.1.6";
   var unityInstanceRef;
   var unsubscribe;
   var container = document.querySelector("#unity-container");
@@ -83,15 +83,15 @@ const cacheName = "CatB-Cat Battle-1.4.0.1.4";
   // }, 5000); 
 
   var buildUrl = "Build";
-  var loaderUrl = buildUrl + "/a50e79a018bf0c679cc9a6575f7fd662.loader.js?v=1.4.0.1.4";
+  var loaderUrl = buildUrl + "/a50e79a018bf0c679cc9a6575f7fd662.loader.js?v=1.4.0.1.6";
   var config = {
-    dataUrl: buildUrl + "/4fda5e77e2ca40a6f4478f59d5bad15a.data.unityweb?v=1.4.0.1.4",
-    frameworkUrl: buildUrl + "/566d4019654d18752e1e8736ad4a3a67.framework.js.unityweb?v=1.4.0.1.4",
-    codeUrl: buildUrl + "/2a4d0d969f8378598845b80021e6eca2.wasm.unityweb?v=1.4.0.1.4",
+    dataUrl: buildUrl + "/b8506dd95326e5e884e10535b49fbb05.data.unityweb?v=1.4.0.1.6",
+    frameworkUrl: buildUrl + "/bf90ada77d3f41350be68270aaa3327f.framework.js.unityweb?v=1.4.0.1.6",
+    codeUrl: buildUrl + "/a8182d53a3ab659424c25f7f63dcb7a8.wasm.unityweb?v=1.4.0.1.6",
     streamingAssetsUrl: "StreamingAssets",
     companyName: "CatB",
     productName: "Cat Battle",
-    productVersion: "1.4.0.1.4",
+    productVersion: "1.4.0.1.6",
     showBanner: unityShowBanner,
 	  cacheControl: function (url) {
   //return "immutable";

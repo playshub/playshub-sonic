@@ -1,9 +1,9 @@
-const cacheName = "Cat Lucky-CatLucky-1.4.0.1.8";
+const cacheName = "Cat Lucky-CatLucky-1.4.0.1.10";
 const contentToCache = [
-    "Build/a50e79a018bf0c679cc9a6575f7fd662.loader.js?v=1.4.0.1.8",
-    "Build/1705a134632013649885b3144d69b863.framework.js.unityweb?v=1.4.0.1.8",
-    "Build/ed236fe9bd57193080e45d6f8e541470.data.unityweb?v=1.4.0.1.8",
-    "Build/d7ac9547c85e9559ee078486ded7002b.wasm.unityweb?v=1.4.0.1.8",
+    "Build/a50e79a018bf0c679cc9a6575f7fd662.loader.js?v=1.4.0.1.10",
+    "Build/1705a134632013649885b3144d69b863.framework.js.unityweb?v=1.4.0.1.10",
+    "Build/42efa94ba7498b68ac91fa006f7c0970.data.unityweb?v=1.4.0.1.10",
+    "Build/d7ac9547c85e9559ee078486ded7002b.wasm.unityweb?v=1.4.0.1.10",
     "TemplateData/style.css",
     "load-sdk.js",
 ];

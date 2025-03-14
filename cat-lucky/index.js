@@ -1,5 +1,5 @@
 var fullSize = true;
-const cacheName = "Cat Lucky-CatLucky-1.4.0.1.8";
+const cacheName = "Cat Lucky-CatLucky-1.4.0.1.10";
   var unityInstanceRef;
   var unsubscribe;
   var container = document.querySelector("#unity-container");
@@ -82,15 +82,15 @@ const cacheName = "Cat Lucky-CatLucky-1.4.0.1.8";
   // }, 5000); 
 
   var buildUrl = "Build";
-  var loaderUrl = buildUrl + "/a50e79a018bf0c679cc9a6575f7fd662.loader.js?v=1.4.0.1.8";
+  var loaderUrl = buildUrl + "/a50e79a018bf0c679cc9a6575f7fd662.loader.js?v=1.4.0.1.10";
   var config = {
-    dataUrl: buildUrl + "/ed236fe9bd57193080e45d6f8e541470.data.unityweb?v=1.4.0.1.8",
-    frameworkUrl: buildUrl + "/1705a134632013649885b3144d69b863.framework.js.unityweb?v=1.4.0.1.8",
-    codeUrl: buildUrl + "/d7ac9547c85e9559ee078486ded7002b.wasm.unityweb?v=1.4.0.1.8",
+    dataUrl: buildUrl + "/42efa94ba7498b68ac91fa006f7c0970.data.unityweb?v=1.4.0.1.10",
+    frameworkUrl: buildUrl + "/1705a134632013649885b3144d69b863.framework.js.unityweb?v=1.4.0.1.10",
+    codeUrl: buildUrl + "/d7ac9547c85e9559ee078486ded7002b.wasm.unityweb?v=1.4.0.1.10",
     streamingAssetsUrl: "StreamingAssets",
     companyName: "Cat Lucky",
     productName: "CatLucky",
-    productVersion: "1.4.0.1.8",
+    productVersion: "1.4.0.1.10",
     showBanner: unityShowBanner,
 	  cacheControl: function (url) {
   //return "immutable";

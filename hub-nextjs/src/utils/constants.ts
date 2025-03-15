@@ -22,3 +22,9 @@ export const TELEGRAM_BOT_USERNAME = process.env
 
 export const HUB_BLOCKCHAIN_SERVICE_URL = process.env
   .NEXT_PUBLIC_HUB_BLOCKCHAIN_SERVICE_URL as string;
+
+export const HONEYCOMB_PROJECT_ADDRESS = process.env
+  .NEXT_PUBLIC_HONEYCOMB_PROJECT_ADDRESS as string;
+
+export const HONEYCOMB_ADMIN_PRIVATE_KEY = process.env
+  .NEXT_PUBLIC_ADMIN_HONEYCOMB_PRIVATE_KEY as string;

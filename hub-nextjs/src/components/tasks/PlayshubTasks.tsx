@@ -35,6 +35,7 @@ import Reward from "@/components/Reward";
 import { getProfile } from "@/apis/account/profile";
 import { useLetAirdropTutorial } from "@/components/providers/LetAirdropTutorialProvider";
 import PlayshubXTaskButton from "./PlayshubXTaskButton";
+import CreateSolProfileDrawer from "../drawers/CreateSolProfileDrawer";
 
 export default function PlayshubTasks() {
   const notification = useNotification()!;
@@ -136,6 +137,8 @@ export default function PlayshubTasks() {
     useState(false);
   const [openCreateSolWalletTaskDrawer, setOpenCreateSolWalletTaskDrawer] =
     useState(false);
+  const [openCreateSolProfileDrawer, setOpenCreateSolProfileDrawer] =
+    useState(false);
 
   const followPlaysOnXTask = data?.find(
     (item) => item.requestType === "FOLLOW_PLAYS_ON_X"
@@ -151,6 +154,9 @@ export default function PlayshubTasks() {
   );
   const createSolWalletTask = data?.find(
     (item) => item.requestType === "CREATE_SOL_WALLET"
+  );
+  const createSolProfileTask = data?.find(
+    (item) => item.requestType === "CREATE_SOL_PROFILE"
   );
 
   const tasks = [
@@ -197,6 +203,15 @@ export default function PlayshubTasks() {
       done: playCatBattleTask?.rewardedStep === 1,
       onclick: () => {
         setOpenPlayCatBattleTaskDrawer(true);
+      },
+    },
+    {
+      name: "Create Profile",
+      image: "/icons/earn/honeycomb.png",
+      earn: createSolProfileTask?.reward?.match(/PLAYS:(\d+)/)?.[1] || 0,
+      done: createSolProfileTask?.rewardedStep === 1,
+      onclick: () => {
+        setOpenCreateSolProfileDrawer(true);
       },
     },
   ];
@@ -433,6 +448,12 @@ export default function PlayshubTasks() {
             setOpenCreateSolWalletTaskDrawer(false);
           }}
           refetchProfile={refetchProfile}
+        />
+        <CreateSolProfileDrawer
+          open={openCreateSolProfileDrawer}
+          onClose={() => {
+            setOpenCreateSolProfileDrawer(false);
+          }}
         />
       </div>
     </Spin>

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a **Game Hub Interface** built using **Next.js**, integrated with **Telegram Mini Apps**, providing a seamless and optimized experience for Telegram users. The hub serves as the central user interface for the Playshub x SONIC ecosystem, allowing users to access games, manage wallets, and participate in the platform's reward system.
+This is a **Game Hub Interface** built using **Next.js**, providing a seamless and optimized experience for Telegram users. The hub serves as the central user interface for the Playshub x SONIC ecosystem, allowing users to access games, manage wallets, and participate in the platform's reward system.
 
 ## Key Features
 
@@ -42,7 +42,7 @@ This is a **Game Hub Interface** built using **Next.js**, integrated with **Tele
 - **UI Components**: Tailwind CSS, Ant Design
 - **State Management**: React Context API
 - **Blockchain Integration**: SONIC (Solana-based) with Web3.js
-- **Authentication**: Telegram Mini App authentication
+- **Authentication**: Telegram authentication
 - **API Communication**: Axios, SWR for data fetching
 - **Mini App Platform**: Telegram
 

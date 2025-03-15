@@ -1,62 +1,85 @@
-# Unity SDK
+# SONIC Unity SDK
 
-SDK for seamless integration with the solana network (sending sol, purchasing item, get balance) in pure JavaScript, making it easy to embed within Unity. (JS, Unity)
+A lightweight SDK for seamless integration with the SONIC blockchain network in pure JavaScript, making it easy to embed within Unity games. This SDK enables game developers to implement blockchain features like token transfers, NFT ownership verification, and in-game purchases without deep blockchain knowledge.
 
 ## Features
 
-- Interact with SOL wallet
-- Purchasing item by sending SOL transactions
+- **Wallet Integration**: Connect and interact with SONIC blockchain wallets
+- **Token Transactions**: Send and receive SONIC tokens within games
+- **In-Game Purchases**: Process secure blockchain-based purchases for game items
+- **Balance Checking**: Query token balances and transaction history
+- **NFT Verification**: Verify ownership of NFTs for game access or special features
+- **Memo Support**: Attach metadata to transactions for game-specific processing
 
-## Payment process
-- The user sends a transaction with an attached memo containing userId and itemId.
-- The indexer service polls via RPC to confirm the purchase. 
-- Upon successful confirmation, the indexer service notifies the game server to update the purchased resources.
+## How It Works
 
-## Technique
+### Payment Process Flow
 
-- @solana/web3js: a JavaScript library that provides tools for interacting with the Solana blockchain
-- webpack: a powerful JavaScript bundler that compiles and packages modules, assets, and dependencies into optimized bundles for use in Unity HTML5.
+1. **Initiation**: User initiates a purchase within the Unity game
+2. **Transaction**: The SDK creates and sends a transaction with an attached memo containing userId and itemId
+3. **Verification**: The blockchain service polls via RPC to confirm the purchase
+4. **Notification**: Upon successful confirmation, the service notifies the game server
+5. **Fulfillment**: Game server updates the player's inventory with purchased items
 
-# Getting Started
+![Payment Process Flow](./figures/payment-flow.png)
 
-## Install with CDN
+## Technology Stack
 
-- Add the script to your HTML file:
+- **@solana/web3.js**: JavaScript library for interacting with the SONIC blockchain
+- **Webpack**: JavaScript bundler that compiles and packages modules for Unity WebGL
+- **TypeScript**: Strongly typed programming language for better developer experience
+- **Unity Integration**: Custom jslib plugins for Unity WebGL communication
+
+## Installation
+
+### Option 1: CDN Installation
+
+Add the script to your Unity WebGL HTML template:
 
 ```html
-<script src="https://unpkg.com/@cuonghx.ngen/sol-unity-sdk@latest"></script>
-```
+<!-- Latest version (auto-updates) -->
+<script src="https://unpkg.com/@playshub/sonic-unity-sdk@latest"></script>
 
-- ℹ️ If you don't want auto-update the library, pass concrete version instead of latest, e.g.
+<!-- OR specific version (recommended for production) -->
+<script src="https://unpkg.com/@playshub/sonic-unity-sdk@1.0.0"></script>
 
-```html
-<script src="https://unpkg.com/@cuonghx.ngen/sol-unity-sdk@0.0.1"></script>
-```
-
-- Add `load-sdk.js` scripts
-
-```html
+<!-- Initialize the SDK -->
 <script src="./load-sdk.js"></script>
 ```
 
-- Prepare `load-sdk.js` file
+Create a `load-sdk.js` file to initialize the SDK:
 
 ```js
-const plugin = new SolUnitySDK.default({
-  privateKey: "xxx",
-  purchaseItemAddress: "xxx",
+const plugin = new SonicUnitySDK.default({
+  rpcUrl: "https://api.sonic-chain.io",
+  privateKey: "YOUR_PRIVATE_KEY", // Only for server-side usage
+  purchaseItemAddress: "RECIPIENT_ADDRESS_FOR_PURCHASES",
 });
 ```
 
-## Install with npm
+### Option 2: NPM Installation
 
 ```shell
-npm i @cuonghx.ngen/sol-unity-sdk
+npm install @playshub/sonic-unity-sdk
 ```
 
-# Usage
+Then import and use in your JavaScript:
 
-- Using with Unity throw `jslib` plugin
+```js
+import SonicUnitySDK from "@playshub/sonic-unity-sdk";
+
+const plugin = new SonicUnitySDK({
+  rpcUrl: "https://api.sonic-chain.io",
+  privateKey: "YOUR_PRIVATE_KEY", // Only for server-side usage
+  purchaseItemAddress: "RECIPIENT_ADDRESS_FOR_PURCHASES",
+});
+```
+
+## Unity Integration
+
+### Creating the jslib Plugin
+
+Create a jslib file in your Unity project's Plugins folder:
 
 ```jslib
 mergeInto(LibraryManager.library, {
@@ -74,20 +97,125 @@ mergeInto(LibraryManager.library, {
     stringToUTF8(returnStr, buffer, bufferSize);
     return buffer;
   },
+  GetBalance: function () {
+    var returnStr = plugin.getBalance();
+    var bufferSize = lengthBytesUTF8(returnStr) + 1;
+    var buffer = _malloc(bufferSize);
+    stringToUTF8(returnStr, buffer, bufferSize);
+    return buffer;
+  },
+  VerifyNFTOwnership: async function (nftAddress) {
+    var returnStr = await plugin.verifyNFTOwnership(UTF8ToString(nftAddress));
+    var bufferSize = lengthBytesUTF8(returnStr) + 1;
+    var buffer = _malloc(bufferSize);
+    stringToUTF8(returnStr, buffer, bufferSize);
+    return buffer;
+  },
 });
 ```
 
-| Function              | Description                           |
-| --------------------- | ------------------------------------- |
-| plugin.getPublicKey() | Return account connected address      |
-| plugin.purchaseItem() | Send transaction form purchasing item |
-| plugin.getBalance()   | Get balance of connected address      |
+### C# Integration in Unity
+
+```csharp
+using System.Runtime.InteropServices;
+using UnityEngine;
+using System.Threading.Tasks;
+
+public class SonicSDKBridge : MonoBehaviour
+{
+    [DllImport("__Internal")]
+    private static extern string GetPublicAddress();
+
+    [DllImport("__Internal")]
+    private static extern string PurchaseItem(string args);
+
+    [DllImport("__Internal")]
+    private static extern string GetBalance();
+
+    [DllImport("__Internal")]
+    private static extern string VerifyNFTOwnership(string nftAddress);
+
+    public string GetWalletAddress()
+    {
+        #if UNITY_WEBGL && !UNITY_EDITOR
+            return GetPublicAddress();
+        #else
+            return "Wallet not available in editor mode";
+        #endif
+    }
+
+    public async Task<string> PurchaseGameItem(string itemId, string price)
+    {
+        #if UNITY_WEBGL && !UNITY_EDITOR
+            string args = JsonUtility.ToJson(new { itemId = itemId, price = price });
+            return PurchaseItem(args);
+        #else
+            return "Purchase not available in editor mode";
+        #endif
+    }
+
+    // Additional methods for other SDK functions
+}
+```
+
+## API Reference
+
+| Function                         | Description                               | Parameters                        | Return Value                    |
+| -------------------------------- | ----------------------------------------- | --------------------------------- | ------------------------------- |
+| `getPublicAddress()`             | Get the connected wallet address          | None                              | String: Wallet address          |
+| `purchaseItem(args)`             | Send a transaction for purchasing an item | JSON string with itemId and price | String: Transaction ID          |
+| `getBalance()`                   | Get the balance of connected wallet       | None                              | String: Balance in SONIC tokens |
+| `verifyNFTOwnership(nftAddress)` | Check if user owns a specific NFT         | String: NFT address               | Boolean: Ownership status       |
+| `signMessage(message)`           | Sign a message with the wallet            | String: Message to sign           | String: Signed message          |
 
 ## Examples
 
-- Complete example via [Examples](./examples/)
+Complete working examples are available in the [Examples](./examples/) directory:
 
-## Authors and acknowledgment
+- Basic wallet integration
+- In-game shop with SONIC payments
+- NFT-gated game features
+
+## Building from Source
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/playshub/playshub-sonic.git
+   cd playshub-sonic/hub-unity-sdk
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Build the SDK:
+   ```bash
+   npm run build
+   ```
+
+The compiled SDK will be available in the `dist` directory.
+
+## Troubleshooting
+
+### Common Issues
+
+- **Connection Issues**: Ensure the RPC URL is correct and accessible
+- **Transaction Failures**: Check wallet balance and network status
+- **Unity Integration**: Make sure the jslib plugin is in the correct location
+
+## Contributing
+
+We welcome contributions to improve the SONIC Unity SDK! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## Authors and Acknowledgment
 
 Playshub Team
 
@@ -95,6 +223,6 @@ Playshub Team
 
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-## Project status
+## Project Status
 
-We are still developing this project following the roadmap in here: https://playshub.io/
+We are actively developing this SDK following the roadmap available at: https://playshub.io/

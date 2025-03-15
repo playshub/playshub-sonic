@@ -11,6 +11,7 @@ import { BullBoardModule } from '@bull-board/nestjs';
 import { ExpressAdapter } from '@bull-board/express';
 import { AccountSubscriberScannerModule as SolAccountSubscriberModule } from './modules/jobs/account-subscriber/scanner/scanner.module';
 import { TransferModule } from './modules/transfer/transfer.module';
+import { HoneycombProfileModule } from './modules/honeycomb/honeycomb-profile.module';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { TransferModule } from './modules/transfer/transfer.module';
     NotificationModule,
     NewUserModule,
     TransferModule,
+    HoneycombProfileModule,
   ],
 })
 export class AppModule {}

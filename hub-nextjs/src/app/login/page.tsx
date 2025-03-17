@@ -3,7 +3,7 @@ import { login } from "@/apis/account/login";
 import { TELEGRAM_BOT_USERNAME } from "@/utils/constants";
 import { setUser } from "@/utils/storage";
 import { useMutation } from "@tanstack/react-query";
-import { LoginButton } from "@telegram-auth/react";
+import { LoginButton, TelegramAuthData } from "@telegram-auth/react";
 import { Flex, Result } from "antd";
 import { useRouter } from "next/navigation";
 
@@ -11,18 +11,7 @@ function Login() {
   const router = useRouter();
 
   const { isError, mutateAsync } = useMutation({
-    mutationFn: async (params: {
-      telegramId: string;
-      displayName: string;
-      languageCode: string;
-      referralId?: string;
-    }) =>
-      login(
-        params.telegramId,
-        params.displayName,
-        params.languageCode,
-        params.referralId
-      ),
+    mutationFn: async (data: TelegramAuthData) => login(data),
   });
 
   if (isError) {
@@ -51,11 +40,7 @@ function Login() {
         <LoginButton
           botUsername={TELEGRAM_BOT_USERNAME}
           onAuthCallback={async (data) => {
-            await mutateAsync({
-              telegramId: data.id.toString(),
-              displayName: `${data.first_name} ${data.last_name}`,
-              languageCode: "en",
-            });
+            await mutateAsync(data);
 
             setUser(data);
             router.push("/");

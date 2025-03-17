@@ -1,18 +1,9 @@
+import { TelegramAuthData } from "@telegram-auth/react";
 import { setJwtToken } from "../../utils/storage";
 import api from "../axios";
 
-export const login = async (
-  telegramId: string,
-  displayName: string,
-  languageCode: string,
-  referralId?: string
-) => {
-  const response = await api.post("/account/login", {
-    telegram_id: telegramId,
-    display_name: displayName,
-    referral_id: referralId,
-    language_code: languageCode,
-  });
+export const login = async (data: TelegramAuthData) => {
+  const response = await api.post("/account/login", { validate_data: data });
   const token = response.data.access_token;
   setJwtToken(token);
   return token;

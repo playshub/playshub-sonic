@@ -15,6 +15,7 @@ import { useState } from "react";
 import { useNotification } from "../providers/NotificationProvider";
 import { useCreateWalletTutorial } from "../providers/CreateWalletTutorialProvider";
 import { useImportWalletTutorial } from "../providers/ImportWalletTutorialProvider";
+import { WalletButton } from "../sonic/components/WalletButton";
 
 export default function WalletInitialize() {
   const { generateWallet, importWallet } = useSolWallet();
@@ -113,6 +114,7 @@ export default function WalletInitialize() {
               >
                 Create New Wallet
               </Button>
+              <WalletButton />
             </Flex>
           </Col>
         </Row>

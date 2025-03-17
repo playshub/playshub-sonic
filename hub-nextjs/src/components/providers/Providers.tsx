@@ -9,6 +9,9 @@ import CreateWalletTutorialProvider from "./CreateWalletTutorialProvider";
 import ImportWalletTutorialProvider from "./ImportWalletTutorialProvider";
 import LetAirdropTutorialProvider from "./LetAirdropTutorialProvider";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
+import { ToastProvider } from "./ToastProvider";
+import { NetworkProvider } from "../sonic/contexts/NetworkContext";
+import { WalletProvider } from "../sonic/components/WalletProvider";
 
 export function Providers({ children }: PropsWithChildren) {
   return (
@@ -25,7 +28,12 @@ export function Providers({ children }: PropsWithChildren) {
             <ImportWalletTutorialProvider>
               <CreateWalletTutorialProvider>
                 <LetAirdropTutorialProvider>
-                  {children}
+                  <NetworkProvider>
+                    <WalletProvider>
+                      <ToastProvider />
+                      {children}
+                    </WalletProvider>
+                  </NetworkProvider>
                 </LetAirdropTutorialProvider>
               </CreateWalletTutorialProvider>
             </ImportWalletTutorialProvider>

@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 @font-face {
   font-family: 'myriadpro-bold';
   src: url('./fonts/myriadpro-bold.otf') format('opentype');

@@ -25,6 +25,8 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useImportWalletTutorial } from "@/components/providers/ImportWalletTutorialProvider";
 import { useQuery } from "@tanstack/react-query";
 import { getProfile } from "@/apis/account/profile";
+import { NetworkToggle } from "@/components/sonic/components/NetworkToggle";
+import { WalletButton } from "@/components/sonic/components/WalletButton";
 
 export default function Wallet() {
   const { isInitialized, wallet, deleteWallet, balance, refetchBalance } =
@@ -68,6 +70,15 @@ export default function Wallet() {
 
   return (
     <div>
+      <header className="p-4 flex justify-between items-center border-b border-cyan-800 bg-black">
+        <h1 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
+          SuperSonic Wallet
+        </h1>
+        <div className="flex items-center gap-4">
+          <NetworkToggle />
+          <WalletButton />
+        </div>
+      </header>
       <div style={{ padding: "10px 0px" }}>
         <Row gutter={[0, 10]}>
           <Col span={24}>

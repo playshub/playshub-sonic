@@ -10,7 +10,7 @@ import {
   Transaction,
 } from "@solana/web3.js";
 import toast from "react-hot-toast";
-import { useNetwork } from "@/contexts/NetworkContext";
+import { useNetwork } from "../contexts/NetworkContext";
 
 export function WalletDashboard() {
   const { publicKey, sendTransaction } = useWallet();

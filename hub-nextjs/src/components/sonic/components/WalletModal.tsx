@@ -61,16 +61,11 @@ export function WalletModal({ isOpen, onClose }: WalletModalProps) {
     <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
       <div
         ref={modalRef}
-        className="bg-black/90 border border-cyan-800 rounded-lg p-6 w-full max-w-md shadow-lg shadow-cyan-500/20"
+        className="bg-white border border-gray-200 rounded-lg p-6 w-full max-w-md shadow-lg text-black"
       >
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl text-cyan-400">Connect Wallet</h2>
-          <button
-            onClick={onClose}
-            className="text-cyan-400 hover:text-cyan-300"
-          >
-            ✕
-          </button>
+          <h2 className="text-xl">Connect Wallet</h2>
+          <button onClick={onClose}>✕</button>
         </div>
 
         {filteredWallets.length > 0 ? (
@@ -82,7 +77,7 @@ export function WalletModal({ isOpen, onClose }: WalletModalProps) {
                   select(wallet.adapter.name);
                   onClose();
                 }}
-                className="w-full py-3 px-4 bg-gradient-to-r from-cyan-600 to-purple-600 text-white rounded-md hover:from-cyan-500 hover:to-purple-500 transition-all font-mono border border-cyan-400/20 shadow-lg shadow-cyan-500/20 flex items-center gap-3"
+                className="w-full py-3 px-4 from-cyan-600 to-purple-600 text-white rounded-md  transition-all  flex items-center gap-3 px-6 py-3 bg-[#53ADE3] text-white rounded-md transition-all text-base hover:cursor-pointer"
               >
                 <img
                   src={wallet.adapter.icon}
@@ -95,24 +90,24 @@ export function WalletModal({ isOpen, onClose }: WalletModalProps) {
           </div>
         ) : (
           <div className="text-center">
-            <p className="text-cyan-400 mb-4">No supported wallets found</p>
+            <p className="mb-4">No supported wallets found</p>
             <div className="flex flex-col gap-4">
-              <a
-                href="https://www.backpack.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="py-3 px-4 bg-gradient-to-r from-cyan-600 to-purple-600 text-white rounded-md hover:from-cyan-500 hover:to-purple-500 transition-all font-mono"
+              <button
+                onClick={() => {
+                  window.open("https://www.backpack.app/", "_blank");
+                }}
+                className="w-full py-3 px-4 from-cyan-600 to-purple-600 text-white rounded-md  transition-all  flex items-center gap-3 px-6 py-3 bg-[#53ADE3] text-white rounded-md transition-all text-base hover:cursor-pointer"
               >
                 Install Backpack
-              </a>
-              <a
-                href="https://nightly.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="py-3 px-4 bg-gradient-to-r from-cyan-600 to-purple-600 text-white rounded-md hover:from-cyan-500 hover:to-purple-500 transition-all font-mono"
+              </button>
+              <button
+                onClick={() => {
+                  window.open("https://nightly.app/", "_blank");
+                }}
+                className="w-full py-3 px-4 from-cyan-600 to-purple-600 text-white rounded-md  transition-all  flex items-center gap-3 px-6 py-3 bg-[#53ADE3] text-white rounded-md transition-all text-base hover:cursor-pointer"
               >
                 Install Nightly
-              </a>
+              </button>
             </div>
           </div>
         )}

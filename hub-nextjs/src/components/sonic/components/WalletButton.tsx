@@ -12,11 +12,9 @@ export function WalletButton() {
     return (
       <button
         onClick={() => disconnect()}
-        className="px-6 py-3 bg-gradient-to-r from-cyan-600 to-purple-600 text-white rounded-md hover:from-cyan-500 hover:to-purple-500 transition-all font-mono border border-cyan-400/20 shadow-lg shadow-cyan-500/20 flex items-center gap-2"
+        className="px-6 py-3 bg-[#53ADE3] text-white rounded-md transition-all text-base hover:cursor-pointer"
       >
-        <span className="border-white/20 pl-2 text-center w-full">
-          Disconnect
-        </span>
+        Disconnect
       </button>
     );
   }
@@ -25,7 +23,7 @@ export function WalletButton() {
     <>
       <button
         onClick={() => setIsModalOpen(true)}
-        className="px-6 py-3 bg-gradient-to-r from-cyan-600 to-purple-600 text-white rounded-md hover:from-cyan-500 hover:to-purple-500 transition-all font-mono border border-cyan-400/20 shadow-lg shadow-cyan-500/20"
+        className="px-6 py-3 bg-[#53ADE3] text-white rounded-md transition-all text-base hover:cursor-pointer"
       >
         Connect External Wallet
       </button>

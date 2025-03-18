@@ -208,7 +208,7 @@ export default function PlayshubTasks() {
     {
       name: "Create Profile",
       image: "/icons/earn/honeycomb.png",
-      earn: createSolProfileTask?.reward?.match(/PLAYS:(\d+)/)?.[1] || 0,
+      earn: createSolProfileTask?.reward,
       done: createSolProfileTask?.rewardedStep === 1,
       onclick: () => {
         setOpenCreateSolProfileDrawer(true);

@@ -74,7 +74,13 @@ function App() {
   ];
 
   const play = async ({ link, name }: { link: string; name: string }) => {
-    setApp(name === "Cat Battle" ? "cat-battle" : "cat-lucky");
+    setApp(
+      name === "Cat Battle"
+        ? "cat-battle"
+        : name === "Cat Challenge"
+        ? "cat-challenge"
+        : "cat-lucky"
+    );
   };
 
   useEffect(() => {

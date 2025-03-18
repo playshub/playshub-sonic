@@ -5,7 +5,7 @@ import { setUser } from "@/utils/storage";
 import Icon from "@ant-design/icons";
 import { useMutation } from "@tanstack/react-query";
 import { LoginButton, TelegramAuthData } from "@telegram-auth/react";
-import { Button, Flex, notification, Result } from "antd";
+import { Button, Flex, Image, notification, Result } from "antd";
 import { useRouter } from "next/navigation";
 
 function Login() {
@@ -53,7 +53,14 @@ function Login() {
         />
         <Button
           type="primary"
-          icon={<Icon />}
+          icon={
+            <Image
+              src="/images/tiktok_logo.png"
+              width={20}
+              height={20}
+              preview={false}
+            />
+          }
           style={{ fontSize: 14, fontWeight: 500, padding: "20px" }}
           onClick={() => {
             notification.info({

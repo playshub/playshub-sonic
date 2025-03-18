@@ -65,6 +65,13 @@ function Login() {
           onClick={() => {
             notification.info({
               message: "This feature is coming soon",
+              placement: "bottom",
+              style: {
+                paddingTop: 10,
+                paddingBottom: 5,
+                width: 300,
+              },
+              closeIcon: null,
             });
           }}
         >

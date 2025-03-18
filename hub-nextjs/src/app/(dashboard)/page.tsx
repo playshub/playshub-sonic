@@ -28,7 +28,7 @@ import StartAirdropTaskModal from "@/components/modals/StartAirdropTaskModal";
 import { useOpenCatLuckyLink } from "@/hooks/useOpenCatLuckyLink";
 import { useOpenCatBattleLink } from "@/hooks/useOpenCatBattleLink";
 import { useApp } from "@/components/providers/AppProvider";
-
+import { useOpenCatChallengeLink } from "@/hooks/useOpenCatChallengeLink";
 function App() {
   const { playGameAreaRef, tourActive, setRun } = useCreateWalletTutorial();
   const { setApp } = useApp();
@@ -39,7 +39,7 @@ function App() {
 
   const { link: catLuckyLink } = useOpenCatLuckyLink();
   const { link: catBattleLink } = useOpenCatBattleLink();
-
+  const { link: catChallengeLink } = useOpenCatChallengeLink();
   const games = [
     {
       name: "Cat Battle",
@@ -63,7 +63,7 @@ function App() {
       name: "Cat Challenge",
       image: "/icons/play/pvp-icon.png",
       description: "Play Realtime PvP with others",
-      link: null,
+      link: catChallengeLink,
     },
     {
       name: "NFTs Marketplace",

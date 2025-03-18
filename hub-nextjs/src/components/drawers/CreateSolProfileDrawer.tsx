@@ -11,8 +11,8 @@ import { useSolWallet } from "../providers/SolanaWalletProvider";
 import { sendTransactions } from "@honeycomb-protocol/edge-client/client/helpers";
 import { HONEYCOMB_PROJECT_ADDRESS } from "@/utils/constants";
 import { PublicKey } from "@solana/web3.js";
-import axios from "axios";
 import { getProfile } from "@/apis/account/profile";
+import api from "@/apis/axios";
 
 export interface CreateSolProfileDrawerProps {
   open: boolean;
@@ -92,13 +92,10 @@ export default function CreateSolProfileDrawer({
 
       console.log("Create profile for user done!");
 
-      // await axios.post(
-      //   "https://api-solana.playshub.io/honeycomb-profile/reward",
-      //   {
-      //     userPublicKey,
-      //     accountId: profileData?.account.accountId,
-      //   }
-      // );
+      await api.post("/honeycomb-profile/reward", {
+        userPublicKey,
+        accountId: profileData?.account.accountId,
+      });
 
       notification.success(
         "Create profile successful. Please check to get reward"

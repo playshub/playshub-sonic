@@ -16,12 +16,13 @@ import Loading from "@/components/spin/Loading";
 import { useOpenCatLuckyLink } from "@/hooks/useOpenCatLuckyLink";
 import { useOpenCatBattleLink } from "@/hooks/useOpenCatBattleLink";
 import { useApp } from "@/components/providers/AppProvider";
-
+import { useOpenCatChallengeLink } from "@/hooks/useOpenCatChallengeLink";
 const { Content, Footer } = Layout;
 
 export default function Dashboard({ children }: PropsWithChildren) {
   const { link: catLuckyLink } = useOpenCatLuckyLink();
   const { link: catBattleLink } = useOpenCatBattleLink();
+  const { link: catChallengeLink } = useOpenCatChallengeLink();
   const { app } = useApp();
   const { isLoading } = useQuery({
     queryKey: ["profile"],
@@ -70,6 +71,15 @@ export default function Dashboard({ children }: PropsWithChildren) {
     return (
       <iframe
         src={catLuckyLink}
+        style={{ width: "100%", height: "100vh" }}
+      ></iframe>
+    );
+  }
+
+  if (app === "cat-challenge") {
+    return (
+      <iframe
+        src={catChallengeLink}
         style={{ width: "100%", height: "100vh" }}
       ></iframe>
     );

@@ -1,15 +1,16 @@
 "use client";
 import { login } from "@/apis/account/login";
+import { useDidMount } from "@/hooks/useDidMount";
 import { TELEGRAM_BOT_USERNAME } from "@/utils/constants";
 import { setUser } from "@/utils/storage";
-import Icon from "@ant-design/icons";
 import { useMutation } from "@tanstack/react-query";
 import { LoginButton, TelegramAuthData } from "@telegram-auth/react";
-import { Button, Flex, Image, notification, Result } from "antd";
+import { Button, Flex, Image, notification, Result, Spin } from "antd";
 import { useRouter } from "next/navigation";
 
 function Login() {
   const router = useRouter();
+  const didMount = useDidMount();
 
   const { isError, mutateAsync } = useMutation({
     mutationFn: async (data: TelegramAuthData) => login(data),
@@ -37,47 +38,49 @@ function Login() {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <Flex
-        vertical
-        gap={10}
-        style={{ marginTop: "auto", padding: 20, marginBottom: 80 }}
-      >
-        <LoginButton
-          botUsername={TELEGRAM_BOT_USERNAME}
-          onAuthCallback={async (data) => {
-            await mutateAsync(data);
-
-            setUser(data);
-            router.push("/");
-          }}
-        />
-        <Button
-          type="primary"
-          icon={
-            <Image
-              src="/images/tiktok_logo.png"
-              width={20}
-              height={20}
-              preview={false}
-            />
-          }
-          style={{ fontSize: 14, fontWeight: 500, padding: "20px" }}
-          onClick={() => {
-            notification.info({
-              message: "This feature is coming soon",
-              placement: "bottom",
-              style: {
-                paddingTop: 10,
-                paddingBottom: 5,
-                width: 300,
-              },
-              closeIcon: null,
-            });
-          }}
+      {didMount && (
+        <Flex
+          vertical
+          gap={10}
+          style={{ marginTop: "auto", padding: 20, marginBottom: 80 }}
         >
-          Login with Tiktok
-        </Button>
-      </Flex>
+          <LoginButton
+            botUsername={TELEGRAM_BOT_USERNAME}
+            onAuthCallback={async (data) => {
+              await mutateAsync(data);
+
+              setUser(data);
+              router.push("/");
+            }}
+          />
+          <Button
+            type="primary"
+            icon={
+              <Image
+                src="/images/tiktok_logo.png"
+                width={20}
+                height={20}
+                preview={false}
+              />
+            }
+            style={{ fontSize: 14, fontWeight: 500, padding: "20px" }}
+            onClick={() => {
+              notification.info({
+                message: "This feature is coming soon",
+                placement: "bottom",
+                style: {
+                  paddingTop: 10,
+                  paddingBottom: 5,
+                  width: 300,
+                },
+                closeIcon: null,
+              });
+            }}
+          >
+            Login with Tiktok
+          </Button>
+        </Flex>
+      )}
     </Flex>
   );
 }

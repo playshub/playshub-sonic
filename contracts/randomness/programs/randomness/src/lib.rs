@@ -18,6 +18,14 @@ pub mod randomness {
     pub fn generate_random(ctx: Context<GenerateRandom>, items: Vec<Item>) -> Result<u64> {
         let random_state = &mut ctx.accounts.random_state;
 
+        // Compute total weight
+        let total_weight: u64 = items.iter().map(|item| item.weight).sum();
+
+        // Validate total weight == 100
+        if total_weight != 100 {
+            return Err(ErrorCode::InvalidTotalWeight.into());
+        }
+
         // Get current clock for entropy
         let clock = ctx.accounts.clock.unix_timestamp;
 
@@ -34,9 +42,6 @@ pub mod randomness {
         random_state.current_seed = entropy.to_bytes();
         random_state.counter = random_state.counter.wrapping_add(1);
         random_state.last_timestamp = clock;
-
-        // Compute total weight
-        let total_weight: u64 = items.iter().map(|item| item.weight).sum();
 
         // Generate random number between 0 and total_weight - 1
         let random_value = u64::from_le_bytes(entropy.to_bytes()[..8].try_into().unwrap());

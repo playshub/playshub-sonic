@@ -1,6 +1,6 @@
 var fullSize = true;
 
-const cacheName = "DefaultCompany-CatChallenge-1.4.0.1.2";
+const cacheName = "DefaultCompany-CatChallenge-1.4.0.1.3";
   var unityInstanceRef;
   var unsubscribe;
   var container = document.querySelector("#unity-container");
@@ -83,15 +83,15 @@ const cacheName = "DefaultCompany-CatChallenge-1.4.0.1.2";
   // }, 5000); 
 
   var buildUrl = "Build";
-  var loaderUrl = buildUrl + "/WebGL.loader.js?v=1.4.0.1.2";
+  var loaderUrl = buildUrl + "/WebGL.loader.js?v=1.4.0.1.3";
   var config = {
-    dataUrl: buildUrl + "/WebGL.data.unityweb?v=1.4.0.1.2",
-    frameworkUrl: buildUrl + "/WebGL.framework.js.unityweb?v=1.4.0.1.2",
-    codeUrl: buildUrl + "/WebGL.wasm.unityweb?v=1.4.0.1.2",
+    dataUrl: buildUrl + "/WebGL.data.unityweb?v=1.4.0.1.3",
+    frameworkUrl: buildUrl + "/WebGL.framework.js.unityweb?v=1.4.0.1.3",
+    codeUrl: buildUrl + "/WebGL.wasm.unityweb?v=1.4.0.1.3",
     streamingAssetsUrl: "StreamingAssets",
     companyName: "DefaultCompany",
     productName: "CatChallenge",
-    productVersion: "1.4.0.1.2",
+    productVersion: "1.4.0.1.3",
     showBanner: unityShowBanner,
 	  cacheControl: function (url) {
   //return "immutable";

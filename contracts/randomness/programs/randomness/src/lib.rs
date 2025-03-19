@@ -15,7 +15,7 @@ pub mod randomness {
         Ok(())
     }
 
-    pub fn generate_random(ctx: Context<GenerateRandom>, max: u64) -> Result<()> {
+    pub fn generate_random(ctx: Context<GenerateRandom>, items: Vec<Item>) -> Result<u64> {
         let random_state = &mut ctx.accounts.random_state;
 
         // Get current clock for entropy
@@ -35,19 +35,32 @@ pub mod randomness {
         random_state.counter = random_state.counter.wrapping_add(1);
         random_state.last_timestamp = clock;
 
-        // Calculate random number within range using the first 8 bytes of the hash
+        // Compute total weight
+        let total_weight: u64 = items.iter().map(|item| item.weight).sum();
+
+        // Generate random number between 0 and total_weight - 1
         let random_value = u64::from_le_bytes(entropy.to_bytes()[..8].try_into().unwrap());
-        let bounded_value = if max > 0 {
-            random_value % max
-        } else {
-            random_value
-        };
+        let selected_value = random_value % total_weight;
 
-        random_state.last_random_value = bounded_value;
+        // Weighted selection logic
+        let mut cumulative_weight = 0;
+        for item in items {
+            cumulative_weight += item.weight;
+            if selected_value < cumulative_weight {
+                random_state.last_random_value = item.id;
+                msg!("Selected item: {}", item.id);
+                return Ok(item.id);
+            }
+        }
 
-        msg!("Generated random value: {}", bounded_value);
-        Ok(())
+        Err(ErrorCode::RandomSelectionFailed.into())
     }
+}
+
+#[derive(AnchorSerialize, AnchorDeserialize, Clone)]
+pub struct Item {
+    pub id: u64,
+    pub weight: u64,
 }
 
 #[derive(Accounts)]
@@ -102,4 +115,10 @@ impl RandomnessState {
             last_random_value: 0,
         }
     }
+}
+
+#[error_code]
+pub enum ErrorCode {
+    #[msg("Failed to select a random item.")]
+    RandomSelectionFailed,
 }

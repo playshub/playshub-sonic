@@ -1,9 +1,9 @@
-const cacheName = "DefaultCompany-CatChallenge-1.4.0.1.0";
+const cacheName = "DefaultCompany-CatChallenge-1.4.0.1.2";
 const contentToCache = [
-    "Build/WebGL.loader.js?v=1.4.0.1.0",
-    "Build/WebGL.framework.js.unityweb?v=1.4.0.1.0",
-    "Build/WebGL.data.unityweb?v=1.4.0.1.0",
-    "Build/WebGL.wasm.unityweb?v=1.4.0.1.0",
+    "Build/WebGL.loader.js?v=1.4.0.1.2",
+    "Build/WebGL.framework.js.unityweb?v=1.4.0.1.2",
+    "Build/WebGL.data.unityweb?v=1.4.0.1.2",
+    "Build/WebGL.wasm.unityweb?v=1.4.0.1.2",
     "TemplateData/style.css",
     "load-sdk.js",
     "ads.js",
